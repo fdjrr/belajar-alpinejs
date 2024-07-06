@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Belajar Alpine.JS</title>
+    <script src="//cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div
+      class="flex flex-col items-center justify-center min-h-screen bg-gray-100"
+    >
+      <div
+        class="bg-white p-6 rounded-lg shadow-md w-full max-w-md mb-3"
+        x-data="{message: 'Hello World!'}"
+      >
+        <button
+          class="bg-slate-900 text-white py-2 px-4 rounded"
+          @click="window.alert(message)"
+          id="tombolPesan"
+        >
+          Click Me
+        </button>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md w-full max-w-md mb-3"
+        x-data="{ show: false }"
+      >
+        <button
+          class="text-white py-2 px-4 rounded"
+          x-bind:class="show ? 'bg-red-500' : 'bg-blue-500'"
+          @click="show = !show"
+          x-text="show ? 'Tutup' : 'Buka'"
+          @keyup.esc.window="show = false"
+        ></button>
+        <p
+          class="mt-4"
+          x-show="show"
+          x-transition:enter.scale.80
+          x-transition:leave.scale.90
+        >
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat
+          voluptatem aperiam placeat eos officia modi, dolorem unde ab id?
+          Minus, dolor sequi distinctio eaque cumque nemo quos quaerat voluptas
+          nesciunt.
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md w-full max-w-md mb-3"
+        x-data="{nama: ''}"
+      >
+        <form action="/post" @submit.prevent="alert(nama)">
+          <label for="nama" class="block mb-2">Nama</label>
+          <input
+            type="text"
+            id="nama"
+            class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-600"
+            @keyup.debounce.500="console.log($event.target.value)"
+          />
+          <button
+            type="submit"
+            class="bg-green-500 text-white py-2 px-4 rounded mt-2"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-lg shadow-md w-full max-w-md"
+        x-data="{pesan: '', open: '', hobby: []}"
+      >
+        <label for="pesan" class="block mb-2">Pesan</label>
+        <textarea
+          type="text"
+          x-model="pesan"
+          placeholder="Tuliskan Pesan Anda"
+          id="pesan"
+          class="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-indigo-600"
+        ></textarea>
+
+        <p
+          class="mt-4 text-lg"
+          x-text="pesan.length"
+          :class="pesan.length > 10 ? 'text-red-500' : 'text-green-500'"
+        ></p>
+
+        <div class="mt-4">
+          <input type="checkbox" class="mr-2" id="checkbox" x-model="open" />
+          <label
+            for="checkbox"
+            class="text-sm"
+            :class="open ? 'text-red-500' : 'text-green-500'"
+            x-text="open ? 'Tutup' : 'Buka'"
+          ></label>
+        </div>
+
+        <div class="mt-4">
+          <div class="flex items-center mb-2">
+            <input
+              type="checkbox"
+              class="mr-2"
+              id="menulis"
+              value="menulis"
+              x-model="hobby"
+            />
+            <label for="menulis" class="text-sm">Menulis</label>
+          </div>
+          <div class="flex items-center mb-2">
+            <input
+              type="checkbox"
+              class="mr-2"
+              id="membaca"
+              value="membaca"
+              x-model="hobby"
+            />
+            <label for="membaca" class="text-sm">Membaca</label>
+          </div>
+          <div class="flex items-center mb-2">
+            <input
+              type="checkbox"
+              class="mr-2"
+              id="menyanyi"
+              value="menyanyi"
+              x-model="hobby"
+            />
+            <label for="menyanyi" class="text-sm">Menyanyi</label>
+          </div>
+
+          <p class="mt-4">
+            Hobby :
+            <span
+              x-text="hobby.map(h => h.charAt(0).toUpperCase() + h.slice(1)).join(', ')"
+            ></span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+  </body>
+</html>
